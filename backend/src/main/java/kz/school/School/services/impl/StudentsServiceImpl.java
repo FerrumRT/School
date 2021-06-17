@@ -17,8 +17,14 @@ public class StudentsServiceImpl implements StudentsService {
     }
 
     @Override
-    public List<Students> getAll() {
-        return studentsMapper.findAll();
+    public List<Students> getAll(String search) {
+        return studentsMapper.findAll(search);
+    }
+
+    @Override
+    public List<Students> getAllById(int id, String search) {
+        search = "%" + search + "%";
+        return studentsMapper.findAllById(id, search);
     }
 
     @Override
@@ -42,6 +48,8 @@ public class StudentsServiceImpl implements StudentsService {
 
     @Override
     public boolean delete(int id) {
+        if(studentsMapper.delete(id)) System.out.println("Deleted");
+        else System.out.println("Not deleted");
         return studentsMapper.delete(id);
     }
 }

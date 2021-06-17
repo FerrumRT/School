@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-        http.httpBasic().disable().csrf().disable()
+        http.httpBasic().disable().cors().and().csrf().disable()
             .authorizeRequests()
                 .antMatchers("/auth").permitAll()
                 .anyRequest().authenticated().and()

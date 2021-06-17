@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 public class AuthController {
 
     @Autowired
@@ -55,9 +55,7 @@ public class AuthController {
 
     public void authenticate(String email, String password) throws Exception {
         try {
-
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
-
         } catch (DisabledException e) {
             throw new Exception("USER_DISABLED", e);
         } catch (BadCredentialsException e) {

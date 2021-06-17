@@ -1,6 +1,7 @@
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
+import { logout } from "../redux/actions/userAction";
 
 export default function NavBar() {
 
@@ -12,17 +13,18 @@ export default function NavBar() {
     <>
     <Navbar bg="light" expand="lg">
       <Container>
-        <Link to="/" class="navbar-brand">Navbar</Link>
+        <Link to="/" className="navbar-brand">Navbar</Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav"/>
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
-            {reducer.user.is_loginned?<>
+            
+            {reducer.user.is_authorized?<>
               <li className="nav-item">
-                <Link to="/login"
+                <Link to="/profile"
                 className={`nav-link ${location.pathname==="/profile"?"active":""}`} 
                 style={location.pathname==="/profile"?{"textDecoration":"underline"}:{}}>{reducer.user.details.name}</Link>
               </li>
-              <Nav.Link>Logout</Nav.Link>
+              <Nav.Link onClick={()=>{logout()(dispatch, reducer)}}>Logout</Nav.Link>
             </>:<>
               <li className="nav-item">
                 <Link to="/login"

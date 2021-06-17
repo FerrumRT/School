@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import java.util.List;
 
 public interface TeachersService extends UserDetailsService {
-    List<Teachers> getAll();
+    List<Teachers> getAll(String search);
     Teachers getOne(int id);
     boolean add(Teachers teacher);
     boolean update(Teachers teacher);

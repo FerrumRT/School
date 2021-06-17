@@ -7,18 +7,21 @@ import java.util.List;
 
 @Mapper
 public interface StudentsMapper {
-    @Select("SELECT `id`, `name`, `surname`, `bdate`, `sGroup` from students")
-    List<Students> findAll();
+    @Select("SELECT `id`, `name`, `surname`, `bdate`, `sGroup` FROM students WHERE `name` LIKE '%#{search}%' OR `surname` LIKE '%#{search}%'")
+    List<Students> findAll(String search);
 
-    @Insert("INSERT INTO `students` (`id`, `name`, `surname`, `bdate`, `sGroup`) VALUES (NULL, #{name}, #{surname}, #{bdate}, #{s_group});")
+    @Insert("INSERT INTO `students` (`id`, `name`, `surname`, `bdate`, `sGroup`) VALUES (NULL, #{name}, #{surname}, #{bdate}, #{sGroup});")
     boolean add(Students student);
 
     @Update("UPDATE `students` SET `name` = #{name}, `surname` = #{surname}, `bdate` = #{bdate}, `sGroup` = #{sGroup} WHERE `id` = #{id};")
     boolean update(Students student);
 
     @Delete("DELETE FROM `students` WHERE `id` = #{id}")
-    boolean delete(int id);
+    boolean delete(@Param("id") int id);
 
     @Select("SELECT `id`, `name`, `surname`, `bdate`, `s_group` FROM `students` where `id` = #{id}")
     Students findOne(int id);
+
+    @Select("SELECT `id`, `name`, `surname`, `bdate`, `sGroup` FROM students WHERE `sGroup` = #{id} AND (`name` LIKE #{search} OR `surname` LIKE #{search})")
+    List<Students> findAllById(int id, String search);
 }

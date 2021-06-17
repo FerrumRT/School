@@ -1,16 +1,17 @@
 package kz.school.School.rest;
 
 import kz.school.School.dto.TeacherResponse;
-import kz.school.School.mappers.TeachersMapper;
 import kz.school.School.models.Teachers;
 import kz.school.School.services.TeachersService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/rest/teachers")
 public class TeachersController {
 
@@ -35,9 +36,11 @@ public class TeachersController {
         return teacherResponses;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/all")
-    public List<TeacherResponse> getAll() {
-        List<Teachers> teachers = teachersService.getAll();
+    public List<TeacherResponse> getAll(@RequestParam(name = "search") String search) {
+        if (search == null) search = "";
+        List<Teachers> teachers = teachersService.getAll(search);
         return toResponseList(teachers);
     }
 
