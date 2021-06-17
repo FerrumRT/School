@@ -17,11 +17,8 @@ public class TeachersServiceImpl implements TeachersService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    private final TeachersMapper teachersMapper;
-
-    public TeachersServiceImpl(TeachersMapper teachersMapper) {
-        this.teachersMapper = teachersMapper;
-    }
+    @Autowired
+    private TeachersMapper teachersMapper;
 
     @Override
     public List<Teachers> getAll(String search) {
